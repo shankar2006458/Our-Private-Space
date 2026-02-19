@@ -33,7 +33,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            
             position: relative;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -132,7 +132,7 @@
             position: absolute;
             inset: 0;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             display: flex;
             opacity: 0;
             transform: translateY(20px);
@@ -393,9 +393,51 @@
 
         .emotions-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: clamp(10px, 3vw, 15px);
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
         }
+
+       
+        /* Hide extra buttons completely */
+        .emotions-grid:not(.expanded) .emotion-btn:nth-child(n+5) {
+            display: none;
+        }
+
+
+        @keyframes moodFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Animate only when expanded */
+        .emotions-grid.expanded .emotion-btn:nth-child(n+5) {
+            animation: moodFadeIn 0.35s ease forwards;
+        }
+
+
+        .show-more-btn {
+            margin-top: 15px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #ec4899;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        body.dark-mode .show-more-btn {
+            color: #d8b4fe;
+        }
+
+
 
         @media (max-width: 640px) {
             .emotions-grid {
@@ -588,8 +630,9 @@
 
         .modal-desc {
             font-size: clamp(0.95rem, 3vw, 1.1rem);
-            opacity: 0.8;
+            opacity: 0.7;
             margin-bottom: 30px;
+            letter-spacing: 0.3px;
         }
 
         .modal-btn {
@@ -820,6 +863,21 @@
             padding: 4px 0;
         }
 
+        @keyframes moodTextFade {
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        .mood-text.animate {
+            animation: moodTextFade 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
@@ -885,12 +943,26 @@
 
                     <div class="card glass emotions-card">
                         <div class="card-title">💌 Share Your Mood</div>
-                        <div class="emotions-grid">
+                        <div class="emotions-grid" id="moodGrid">
+                            <!-- Always visible (2 rows on mobile) -->
                             <button class="emotion-btn" onclick="changeMood('😊')">😊</button>
                             <button class="emotion-btn" onclick="changeMood('😍')">😍</button>
-                            <button class="emotion-btn" onclick="changeMood('😴')">😴</button>
                             <button class="emotion-btn" onclick="changeMood('🥰')">🥰</button>
+                            <button class="emotion-btn" onclick="changeMood('😎')">😎</button>
+
+                            <!-- Hidden moods -->
+                            <button class="emotion-btn extra-mood" onclick="changeMood('😴')">😴</button>
+                            <button class="emotion-btn extra-mood" onclick="changeMood('😢')">😢</button>
+                            <button class="emotion-btn extra-mood" onclick="changeMood('😔')">😔</button>
+                            <button class="emotion-btn extra-mood" onclick="changeMood('🤗')">🤗</button>
+                            <button class="emotion-btn extra-mood" onclick="changeMood('🥺')">🥺</button>
+                            <button class="emotion-btn extra-mood" onclick="changeMood('😇')">😇</button>
                         </div>
+
+                        <button class="show-more-btn" onclick="toggleMoods()" id="toggleMoodBtn">
+                            Show more 💕
+                        </button>
+
                     </div>
 
                     <div class="card glass love-counter-card">
@@ -947,7 +1019,7 @@
             <div class="modal-emoji">💭</div>
             <div class="modal-title">Your love is thinking of you! 💕</div>
             <div class="modal-desc">Right now</div>
-            <button class="modal-btn" onclick="closeThinkingModal()">Say it Back 💌</button>
+            <button class="modal-btn" onclick="closeThinkingModal()">Aww, Same 💗</button>
         </div>
     </div>
 
@@ -1275,6 +1347,49 @@
             }
         }
 
+        // Format alert time for display
+        function formatAlertTime(timestamp) {
+            const alertDate = new Date(timestamp);
+            const now = new Date();
+
+            const diffMs = now - alertDate;
+            const diffMinutes = Math.floor(diffMs / (1000 * 60));
+
+            let agoText = "";
+
+            if (diffMinutes < 1) {
+                agoText = "Just now";
+            } else if (diffMinutes < 60) {
+                agoText = `${diffMinutes} min ago`;
+            }
+
+            const isToday =
+                alertDate.toDateString() === now.toDateString();
+
+            const tomorrow = new Date();
+            tomorrow.setDate(now.getDate() + 1);
+
+            const isTomorrow =
+                alertDate.toDateString() === tomorrow.toDateString();
+
+            const timeString = alertDate.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            let mainText;
+
+            if (isToday) {
+                mainText = `Today at ${timeString}`;
+            } else if (isTomorrow) {
+                mainText = `Tomorrow at ${timeString}`;
+            } else {
+                mainText = alertDate.toLocaleDateString() + ` at ${timeString}`;
+            }
+
+            return agoText ? `${mainText} • ${agoText}` : mainText;
+        }
+
 
 
         // Close thinking modal
@@ -1296,14 +1411,24 @@
             document.querySelector('.modal-title').textContent =
                 `${senderName} is thinking of you 💕`;
 
+            const formattedTime = formatAlertTime(appData.thinkingAlertTime);
+            document.querySelector('.modal-desc').textContent = formattedTime;
+
             modal.classList.add('active');
         }
-
 
 
         // Refresh UI
         function refreshDisplay() {
 
+            // ALWAYS sync theme
+            if (appData.theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+
+            if (!activeProfile) return;
 
             // ALWAYS sync theme (even if no profile selected)
             if (appData.theme === 'dark') {
@@ -1340,14 +1465,28 @@
             document.getElementById('partnerMoodEmoji').textContent = partnerMood;
 
             const messages = {
-                '😊': `${partnerName} is feeling happy.`,
-                '😍': `${partnerName} can't stop thinking about you.`,
-                '😴': `${partnerName} is a little tired.`,
-                '🥰': `${partnerName} feels really close to you.`
+                '😊': `${partnerName} is feeling happy today 🌸`,
+                '😍': `${partnerName} can't stop thinking about you 💕`,
+                '🥰': `${partnerName} feels extra close to you right now 🫶`,
+                '😎': `${partnerName} is feeling confident and cool 😌`,
+                '😴': `${partnerName} is a little tired and needs cuddles 💤`,
+                '😢': `${partnerName} is feeling a bit emotional today 💔`,
+                '😔': `${partnerName} is slightly upset… maybe needs love 🥺`,
+                '🤗': `${partnerName} really wants a warm hug from you 🤍`,
+                '🥺': `${partnerName} is missing you badly right now 💭`,
+                '😇': `${partnerName} is in a pure and peaceful mood ✨`
             };
 
-            document.getElementById('partnerMoodText').textContent =
-                messages[partnerMood] || "They're amazing!";
+            const moodTextEl = document.getElementById('partnerMoodText');
+
+            moodTextEl.classList.remove('animate');
+            void moodTextEl.offsetWidth; // restart animation
+
+            moodTextEl.textContent =
+                messages[partnerMood] || `${partnerName} is thinking about you 💞`;
+
+            moodTextEl.classList.add('animate');
+
 
             document.getElementById('loveCount').textContent = appData.loveCount;
             
@@ -1513,6 +1652,21 @@
                 el.style.opacity = "1";
             }, 150);
         }
+
+        // Toggle extra moods
+        function toggleMoods() {
+            const grid = document.getElementById('moodGrid');
+            const btn = document.getElementById('toggleMoodBtn');
+
+            grid.classList.toggle('expanded');
+
+            if (grid.classList.contains('expanded')) {
+                btn.textContent = "Show less ✨";
+            } else {
+                btn.textContent = "Show more 💕";
+            }
+        }
+
 
 
         setTimeout(() => {
