@@ -20,7 +20,8 @@
         body {
             background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #ede9fe 100%);
             color: #333;
-            transition: all 0.3s ease;
+            transition: background 0.35s ease, color 0.35s ease;
+            will-change: background, color;
         }
 
         body.dark-mode {
@@ -878,6 +879,48 @@
             animation: moodTextFade 0.3s ease;
         }
 
+        .emotion-btn.selected {
+            outline: 3px solid #ec4899;
+            transform: scale(1.1);
+        }
+
+        .mood-item{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:4px;
+        }
+
+        .mood-label{
+            font-size:0.75rem;
+            opacity:0.7;
+        }
+
+        .emotion-btn{
+            position:relative;
+        }
+
+        .emotion-btn::after{
+            content: attr(data-label);
+            position:absolute;
+            top:-30px;
+            left:50%;
+            transform:translateX(-50%);
+            background:rgba(0,0,0,0.75);
+            color:white;
+            font-size:0.7rem;
+            padding:4px 8px;
+            border-radius:6px;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity 0.2s;
+            white-space:nowrap;
+        }
+
+        .emotion-btn:hover::after{
+            opacity:1;
+        }
+
     </style>
 </head>
 <body>
@@ -929,7 +972,7 @@
                 </div>
                 <div class="header-right">
                     <button class="icon-btn" onclick="showSwitchConfirm()" title="Switch Role">🔄</button>
-                    <button class="icon-btn" onclick="toggleDarkMode()" title="Dark Mode">🌙</button>
+                    <button id="themeBtn" class="icon-btn" onclick="toggleDarkMode()" title="Toggle Theme">🌙</button>
                 </div>
             </div>
 
@@ -945,18 +988,26 @@
                         <div class="card-title">💌 Share Your Mood</div>
                         <div class="emotions-grid" id="moodGrid">
                             <!-- Always visible (2 rows on mobile) -->
-                            <button class="emotion-btn" onclick="changeMood('😊')">😊</button>
-                            <button class="emotion-btn" onclick="changeMood('😍')">😍</button>
-                            <button class="emotion-btn" onclick="changeMood('🥰')">🥰</button>
-                            <button class="emotion-btn" onclick="changeMood('😎')">😎</button>
+                            <button class="emotion-btn" data-label="Happy" onclick="changeMood('😊')">😊</button>
+                            <button class="emotion-btn" data-label="In Love" onclick="changeMood('😍')">😍</button>
+                            <button class="emotion-btn" data-label="Extra close to you" onclick="changeMood('🥰')">🥰</button>
+                            <button class="emotion-btn" data-label="Cool" onclick="changeMood('😎')">😎</button>
 
                             <!-- Hidden moods -->
-                            <button class="emotion-btn extra-mood" onclick="changeMood('😴')">😴</button>
-                            <button class="emotion-btn extra-mood" onclick="changeMood('😢')">😢</button>
-                            <button class="emotion-btn extra-mood" onclick="changeMood('😔')">😔</button>
-                            <button class="emotion-btn extra-mood" onclick="changeMood('🤗')">🤗</button>
-                            <button class="emotion-btn extra-mood" onclick="changeMood('🥺')">🥺</button>
-                            <button class="emotion-btn extra-mood" onclick="changeMood('😇')">😇</button>
+                            <button class="emotion-btn extra-mood" data-label="Sleepy" onclick="changeMood('😴')">😴</button>
+                            <button class="emotion-btn extra-mood" data-label="Sad" onclick="changeMood('😢')">😢</button>
+                            <button class="emotion-btn extra-mood" data-label="Upset" onclick="changeMood('😔')">😔</button>
+                            <button class="emotion-btn extra-mood" data-label="Hugging" onclick="changeMood('🤗')">🤗</button>
+                            <button class="emotion-btn extra-mood" data-label="Missing you" onclick="changeMood('🥺')">🥺</button>
+                            <button class="emotion-btn extra-mood" data-label="Peaceful mood" onclick="changeMood('😇')">😇</button>
+                            <button class="emotion-btn extra-mood" data-label="Normal & Neutral" onclick="changeMood('😐')">😐</button>
+                            <button class="emotion-btn extra-mood" data-label="Thinking" onclick="changeMood('🤔')">🤔</button>
+                            <button class="emotion-btn extra-mood" data-label="Confused" onclick="changeMood('😕')">😕</button>
+                            <button class="emotion-btn extra-mood" data-label="Frustrated" onclick="changeMood('😤')">😤</button>
+                            <button class="emotion-btn extra-mood" data-label="Bored" onclick="changeMood('😑')">😑</button>
+                            <button class="emotion-btn extra-mood" data-label="Angry" onclick="changeMood('😡')">😡</button>
+                            <button class="emotion-btn extra-mood" data-label="Cute" onclick="changeMood('😋')">😋</button>
+                            <button class="emotion-btn extra-mood" data-label="Tired" onclick="changeMood('🥱')">🥱</button>
                         </div>
 
                         <button class="show-more-btn" onclick="toggleMoods()" id="toggleMoodBtn">
@@ -1007,6 +1058,7 @@
                         <div class="card-title" style="color: white;">🕒 Thinking of You</div>
                         <p style="opacity: 0.9; margin-bottom: 15px; font-size: clamp(0.9rem, 2.5vw, 1rem);">Let Aditi know she's on your mind</p>
                         <button class="thinking-btn" onclick="sendThinkingAlert()">Send Love 💌</button>
+                        <div id="thinkingLast" style="margin-top:10px;font-size:0.85rem;opacity:0.8;"></div>
                     </div>
                 </div>
             </div>
@@ -1049,6 +1101,8 @@
             },
             thinkingAlert: null,
             thinkingAlertTime: null,
+            seenTime: null,
+            lastSender: null,
             theme: 'light',
             togetherSince: "2024-01-24T00:00:00",
             roles: {
@@ -1287,6 +1341,12 @@
                 appData.herMood = emoji;
             }
 
+            document.querySelectorAll('.emotion-btn').forEach(btn=>{
+                btn.classList.remove('selected');
+            });
+
+            event.target.classList.add('selected');
+
             saveToFirebase(appData);
             showToast('Mood shared! 💌');
             burstHearts();
@@ -1326,6 +1386,7 @@
             }
 
             appData.thinkingAlert = activeProfile;
+            appData.lastSender = activeProfile;   // ⭐ store sender
             appData.thinkingAlertTime = Date.now();
             saveToFirebase(appData);
 
@@ -1396,6 +1457,9 @@
         function closeThinkingModal() {
             document.getElementById('thinkingModal').classList.remove('active');
 
+                // Save seen time
+                appData.seenTime = Date.now();
+
             appData.thinkingAlert = null;
             appData.thinkingAlertTime = null;
             saveToFirebase(appData);
@@ -1428,14 +1492,9 @@
                 document.body.classList.remove('dark-mode');
             }
 
-            if (!activeProfile) return;
-
-            // ALWAYS sync theme (even if no profile selected)
-            if (appData.theme === 'dark') {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
+            // Update theme icon
+            document.getElementById("themeBtn").textContent =
+                appData.theme === "dark" ? "☀️" : "🌙";
 
             if (!activeProfile) return;
 
@@ -1464,6 +1523,17 @@
 
             document.getElementById('partnerMoodEmoji').textContent = partnerMood;
 
+            // Restore selected mood highlight
+            const myMood = activeProfile === 'him' ? appData.himMood : appData.herMood;
+
+            document.querySelectorAll('.emotion-btn').forEach(btn => {
+                btn.classList.remove('selected');
+
+                if (btn.textContent === myMood) {
+                    btn.classList.add('selected');
+                }
+            });
+
             const messages = {
                 '😊': `${partnerName} is feeling happy today 🌸`,
                 '😍': `${partnerName} can't stop thinking about you 💕`,
@@ -1474,7 +1544,15 @@
                 '😔': `${partnerName} is slightly upset… maybe needs love 🥺`,
                 '🤗': `${partnerName} really wants a warm hug from you 🤍`,
                 '🥺': `${partnerName} is missing you badly right now 💭`,
-                '😇': `${partnerName} is in a pure and peaceful mood ✨`
+                '😇': `${partnerName} is in a pure and peaceful mood ✨`,
+                '😐': `${partnerName} is feeling normal today 🙂`,
+                '🤔': `${partnerName} is thinking about something 🤔`,
+                '😕': `${partnerName} is a little confused today 😕`,
+                '😤': `${partnerName} feels a bit frustrated 😤`,
+                '😑': `${partnerName} is a little bored today 😑`,
+                '😡': `${partnerName} might be a bit angry 😡`,
+                '😋': `${partnerName} is feeling playful and cute 😋`,
+                '🥱': `${partnerName} is very sleepy right now 🥱`,
             };
 
             const moodTextEl = document.getElementById('partnerMoodText');
@@ -1514,6 +1592,39 @@
 
             document.getElementById('loveStats').innerHTML = statsHTML;
 
+
+            // ALSO show seen time if exists and no current alert
+            const lastEl = document.getElementById("thinkingLast");
+
+            // If YOU sent the alert and it is still active
+            if (appData.thinkingAlertTime && appData.lastSender === activeProfile) {
+
+                lastEl.textContent =
+                    "You sent love • " + formatAlertTime(appData.thinkingAlertTime);
+
+            }
+
+            // If YOU sent it and partner has seen it
+            else if (appData.seenTime && appData.lastSender === activeProfile) {
+
+                lastEl.textContent =
+                    "Seen by your love • " + formatAlertTime(appData.seenTime);
+
+            }
+
+            // If partner sent it (you are receiver)
+            else if (appData.lastSender && appData.lastSender !== activeProfile) {
+
+                lastEl.textContent = "";
+
+            }
+
+            // Nothing sent yet
+            else {
+
+                lastEl.textContent = "No love sent yet 💭";
+
+            }
         }
 
 
@@ -1583,6 +1694,9 @@
             const isDark = document.body.classList.toggle('dark-mode');
 
             appData.theme = isDark ? 'dark' : 'light';
+
+            // update icon
+            document.getElementById("themeBtn").textContent = isDark ? "☀️" : "🌙";
             saveToFirebase(appData);
         }
 
