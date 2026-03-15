@@ -1442,10 +1442,17 @@
 
             if (isToday) {
                 mainText = `Today at ${timeString}`;
-            } else if (isTomorrow) {
+            } 
+            else if (isTomorrow) {
                 mainText = `Tomorrow at ${timeString}`;
-            } else {
-                mainText = alertDate.toLocaleDateString() + ` at ${timeString}`;
+            } 
+            else {
+            
+                const d = alertDate.getDate().toString().padStart(2,'0');
+                const m = (alertDate.getMonth() + 1).toString().padStart(2,'0');
+                const y = alertDate.getFullYear();
+            
+                mainText = `${d}/${m}/${y} at ${timeString}`;
             }
 
             return agoText ? `${mainText} • ${agoText}` : mainText;
