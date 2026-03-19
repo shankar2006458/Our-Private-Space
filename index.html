@@ -1008,6 +1008,36 @@
                             <button class="emotion-btn extra-mood" data-label="Angry" onclick="changeMood('😡')">😡</button>
                             <button class="emotion-btn extra-mood" data-label="Cute" onclick="changeMood('😋')">😋</button>
                             <button class="emotion-btn extra-mood" data-label="Tired" onclick="changeMood('🥱')">🥱</button>
+                            
+                            <!-- Romantic & Love -->
+                            <button class="emotion-btn extra-mood" data-label="Kissing you" onclick="changeMood('😘')">😘</button>
+                            <button class="emotion-btn extra-mood" data-label="Flirting" onclick="changeMood('😏')">😏</button>
+                            <button class="emotion-btn extra-mood" data-label="Blushing for you" onclick="changeMood('🙈')">🙈</button>
+
+                            <!-- Missing & Long Distance -->
+                            <button class="emotion-btn extra-mood" data-label="Waiting for you" onclick="changeMood('⏳')">⏳</button>
+
+                            <!-- Cute & Playful -->
+                            <button class="emotion-btn extra-mood" data-label="Teasing you" onclick="changeMood('😝')">😝</button>
+
+
+                            <!-- Health & Energy -->
+                            <button class="emotion-btn extra-mood" data-label="Not feeling well" onclick="changeMood('🤒')">🤒</button>
+                            <button class="emotion-btn extra-mood" data-label="Headache" onclick="changeMood('🤕')">🤕</button>
+
+                            <!-- Emotional Depth -->
+                            <button class="emotion-btn extra-mood" data-label="Overthinking" onclick="changeMood('💭')">💭</button>
+                            <button class="emotion-btn extra-mood" data-label="Crying a little" onclick="changeMood('😭')">😭</button>
+
+                            <!-- Relationship Moments -->
+                            <button class="emotion-btn extra-mood" data-label="Missing your hug" onclick="changeMood('🫂')">🫂</button>
+                            <button class="emotion-btn extra-mood" data-label="Wants you to call" onclick="changeMood('📞')">📞</button>
+                            <button class="emotion-btn extra-mood" data-label="Thinking about our memories" onclick="changeMood('📸')">📸</button>
+
+                            <!-- Fun / Random -->
+                            <button class="emotion-btn extra-mood" data-label="Gaming" onclick="changeMood('🎮')">🎮</button>
+                            <button class="emotion-btn extra-mood" data-label="Listening music" onclick="changeMood('🎧')">🎧</button>
+
                         </div>
 
                         <button class="show-more-btn" onclick="toggleMoods()" id="toggleMoodBtn">
@@ -1447,11 +1477,11 @@
                 mainText = `Tomorrow at ${timeString}`;
             } 
             else {
-            
+
                 const d = alertDate.getDate().toString().padStart(2,'0');
                 const m = (alertDate.getMonth() + 1).toString().padStart(2,'0');
                 const y = alertDate.getFullYear();
-            
+
                 mainText = `${d}/${m}/${y} at ${timeString}`;
             }
 
@@ -1560,6 +1590,34 @@
                 '😡': `${partnerName} might be a bit angry 😡`,
                 '😋': `${partnerName} is feeling playful and cute 😋`,
                 '🥱': `${partnerName} is very sleepy right now 🥱`,
+                
+                // 💖 Romantic & Love
+                '😘': `${partnerName} is sending you kisses right now 😘`,
+                '😏': `${partnerName} is flirting with you 😏`,
+                '🙈': `${partnerName} is blushing thinking about you 🙈`,
+
+                // ⏳ Missing & Distance
+                '⏳': `${partnerName} is waiting for you patiently ⏳`,
+
+                // 😜 Playful
+                '😝': `${partnerName} is teasing you playfully 😝`,
+
+                // 🤒 Health
+                '🤒': `${partnerName} is not feeling well…🤒`,
+                '🤕': `${partnerName} has a headache 🤕`,
+
+                // 💭 Emotional depth
+                '💭': `${partnerName} is lost in thoughts about you 💭`,
+                '😭': `${partnerName} is crying… maybe needs your love 😭`,
+
+                // 🫂 Relationship moments
+                '🫂': `${partnerName} really wants your hug right now 🫂`,
+                '📞': `${partnerName} wants to hear your voice 📞`,
+                '📸': `${partnerName} is thinking about your memories 📸`,
+
+                // 🎮 Fun / Activity
+                '🎮': `${partnerName} is gaming right now 🎮`,
+                '🎧': `${partnerName} is lost in music 🎧`,
             };
 
             const moodTextEl = document.getElementById('partnerMoodText');
