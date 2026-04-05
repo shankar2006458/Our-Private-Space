@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ec4899">
     <title>Our Private Space | Romantic Couple App</title>
     <style>
         * {
@@ -921,6 +923,12 @@
             opacity:1;
         }
 
+        .mood-time {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 6px;
+        }
+
     </style>
 </head>
 <body>
@@ -982,6 +990,7 @@
                         <div class="card-title">💭 Their Mood</div>
                         <div class="mood-emoji" id="partnerMoodEmoji">😊</div>
                         <div class="mood-text" id="partnerMoodText">They're feeling wonderful!</div>
+                        <div class="mood-time" id="partnerMoodTime"></div>
                     </div>
 
                     <div class="card glass emotions-card">
@@ -1124,6 +1133,8 @@
         let appData = {
             himMood: '😊',
             herMood: '😊',
+            himMoodTime: null,   // ✅ ADD
+            herMoodTime: null,   // ✅ ADD
             loveCount: 0,
             loveTaps: {
                 him: 0,
@@ -1365,10 +1376,14 @@
                 return;
             }
 
+            const now = Date.now();
+
             if (activeProfile === 'him') {
                 appData.himMood = emoji;
+                appData.himMoodTime = now;   // ✅ ADD
             } else {
                 appData.herMood = emoji;
+                appData.herMoodTime = now;   // ✅ ADD
             }
 
             document.querySelectorAll('.emotion-btn').forEach(btn=>{
@@ -1383,6 +1398,22 @@
             refreshDisplay();
         }
 
+        // Format time ago
+        function getTimeAgo(timestamp) {
+            if (!timestamp) return "";
+
+            const diff = Date.now() - timestamp;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+
+            if (seconds < 60) return "Just now";
+            if (minutes < 60) return `${minutes} min ago`;
+            if (hours < 24) return `${hours} hr ago`;
+
+            const days = Math.floor(hours / 24);
+            return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+        }
 
         // Add to love counter
         function addLove() {
@@ -1557,6 +1588,11 @@
             const partnerMood =
                 partnerRole === 'her' ? appData.herMood : appData.himMood;
 
+            const partnerMoodTime =
+                partnerRole === 'her' ? appData.herMoodTime : appData.himMoodTime;
+
+            const timeAgo = getTimeAgo(partnerMoodTime);
+
 
             document.getElementById('partnerMoodEmoji').textContent = partnerMood;
 
@@ -1621,12 +1657,21 @@
             };
 
             const moodTextEl = document.getElementById('partnerMoodText');
+            const moodTimeEl = document.getElementById('partnerMoodTime');
 
             moodTextEl.classList.remove('animate');
-            void moodTextEl.offsetWidth; // restart animation
+            void moodTextEl.offsetWidth;
 
-            moodTextEl.textContent =
+            const baseText =
                 messages[partnerMood] || `${partnerName} is thinking about you 💞`;
+
+            // 👉 ONLY main text here
+            moodTextEl.textContent = baseText;
+
+            // 👉 time goes to second line
+            moodTimeEl.textContent = timeAgo
+                ? `Last updated • ${timeAgo}`
+                : "";
 
             moodTextEl.classList.add('animate');
 
@@ -1858,5 +1903,21 @@
             }
         }, 6000);
 
+        setInterval(() => {
+            if (activeProfile) {
+                refreshDisplay();
+            }
+        }, 60000); // every 1 minute
+
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+            .then(() => console.log("PWA Ready ✅"))
+            .catch(err => console.log("SW Error:", err));
+        });
+        }
     </script>
 </html>
