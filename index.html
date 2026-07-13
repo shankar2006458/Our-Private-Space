@@ -929,6 +929,271 @@
             margin-top: 6px;
         }
 
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+body.dark-mode .filter-btn {
+    background: rgba(30, 27, 75, 0.6);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #f5f3ff;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    color: white;
+    border-color: transparent;
+}
+
+/* 🔧 ADD THIS: Dark mode active filter button */
+body.dark-mode .filter-btn.active {
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+}
+
+.activity-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.4s ease-out;
+    overflow: hidden;
+}
+
+body.dark-mode .activity-item {
+    background: rgba(30, 27, 75, 0.6);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.activity-item:hover {
+    transform: translateX(5px);
+}
+
+
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.5;
+    font-size: 1.1rem;
+}
+/* Enhanced History Styles */
+.history-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 0 20px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .stat-card {
+    background: rgba(30, 27, 75, 0.6);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.activity-date-group {
+    margin-bottom: 25px;
+}
+
+.date-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+}
+
+.date-header-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
+    border-radius: 2px;
+}
+
+.date-header-text {
+    font-weight: 700;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.activity-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.4s ease-out;
+    overflow: hidden;
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 2px;
+}
+
+.activity-item.type-mood::before {
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+}
+
+.activity-item.type-thinking::before {
+    background: linear-gradient(180deg, #a855f7, #7c3aed);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.activity-icon-wrapper {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(236, 72, 153, 0.1);
+    flex-shrink: 0;
+}
+
+body.dark-mode .activity-icon-wrapper {
+    background: rgba(168, 85, 247, 0.2);
+}
+
+.activity-icon-small {
+    font-size: 1.5rem;
+}
+
+.activity-info {
+    flex: 1;
+}
+
+.activity-text {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.activity-time {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.activity-user-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.badge-shankar {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.badge-aditi {
+    background: rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+}
+
+body.dark-mode .badge-shankar {
+    background: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+
+body.dark-mode .badge-aditi {
+    background: rgba(236, 72, 153, 0.3);
+    color: #f9a8d4;
+}
+
+.activity-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.activity-exact-time {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 640px) {
+    .history-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -997,55 +1262,55 @@
                         <div class="card-title">💌 Share Your Mood</div>
                         <div class="emotions-grid" id="moodGrid">
                             <!-- Always visible (2 rows on mobile) -->
-                            <button class="emotion-btn" data-label="Happy" onclick="changeMood('😊')">😊</button>
-                            <button class="emotion-btn" data-label="In Love" onclick="changeMood('😍')">😍</button>
-                            <button class="emotion-btn" data-label="Extra close to you" onclick="changeMood('🥰')">🥰</button>
-                            <button class="emotion-btn" data-label="Cool" onclick="changeMood('😎')">😎</button>
+                            <button class="emotion-btn" data-label="Happy" onclick="changeMood('😊', this)">😊</button>
+                            <button class="emotion-btn" data-label="In Love" onclick="changeMood('😍', this)">😍</button>
+                            <button class="emotion-btn" data-label="Extra close to you" onclick="changeMood('🥰', this)">🥰</button>
+                            <button class="emotion-btn" data-label="Cool" onclick="changeMood('😎', this)">😎</button>
 
                             <!-- Hidden moods -->
-                            <button class="emotion-btn extra-mood" data-label="Sleepy" onclick="changeMood('😴')">😴</button>
-                            <button class="emotion-btn extra-mood" data-label="Sad" onclick="changeMood('😢')">😢</button>
-                            <button class="emotion-btn extra-mood" data-label="Upset" onclick="changeMood('😔')">😔</button>
-                            <button class="emotion-btn extra-mood" data-label="Hugging" onclick="changeMood('🤗')">🤗</button>
-                            <button class="emotion-btn extra-mood" data-label="Missing you" onclick="changeMood('🥺')">🥺</button>
-                            <button class="emotion-btn extra-mood" data-label="Peaceful mood" onclick="changeMood('😇')">😇</button>
-                            <button class="emotion-btn extra-mood" data-label="Normal & Neutral" onclick="changeMood('😐')">😐</button>
-                            <button class="emotion-btn extra-mood" data-label="Thinking" onclick="changeMood('🤔')">🤔</button>
-                            <button class="emotion-btn extra-mood" data-label="Confused" onclick="changeMood('😕')">😕</button>
-                            <button class="emotion-btn extra-mood" data-label="Frustrated" onclick="changeMood('😤')">😤</button>
-                            <button class="emotion-btn extra-mood" data-label="Bored" onclick="changeMood('😑')">😑</button>
-                            <button class="emotion-btn extra-mood" data-label="Angry" onclick="changeMood('😡')">😡</button>
-                            <button class="emotion-btn extra-mood" data-label="Cute" onclick="changeMood('😋')">😋</button>
-                            <button class="emotion-btn extra-mood" data-label="Tired" onclick="changeMood('🥱')">🥱</button>
+                            <button class="emotion-btn extra-mood" data-label="Sleepy" onclick="changeMood('😴', this)">😴</button>
+                            <button class="emotion-btn extra-mood" data-label="Sad" onclick="changeMood('😢', this)">😢</button>
+                            <button class="emotion-btn extra-mood" data-label="Upset" onclick="changeMood('😔', this)">😔</button>
+                            <button class="emotion-btn extra-mood" data-label="Hugging" onclick="changeMood('🤗', this)">🤗</button>
+                            <button class="emotion-btn extra-mood" data-label="Missing you" onclick="changeMood('🥺', this)">🥺</button>
+                            <button class="emotion-btn extra-mood" data-label="Peaceful mood" onclick="changeMood('😇', this)">😇</button>
+                            <button class="emotion-btn extra-mood" data-label="Normal & Neutral" onclick="changeMood('😐', this)">😐</button>
+                            <button class="emotion-btn extra-mood" data-label="Thinking" onclick="changeMood('🤔', this)">🤔</button>
+                            <button class="emotion-btn extra-mood" data-label="Confused" onclick="changeMood('😕', this)">😕</button>
+                            <button class="emotion-btn extra-mood" data-label="Frustrated" onclick="changeMood('😤', this)">😤</button>
+                            <button class="emotion-btn extra-mood" data-label="Bored" onclick="changeMood('😑', this)">😑</button>
+                            <button class="emotion-btn extra-mood" data-label="Angry" onclick="changeMood('😡', this)">😡</button>
+                            <button class="emotion-btn extra-mood" data-label="Cute" onclick="changeMood('😋', this)">😋</button>
+                            <button class="emotion-btn extra-mood" data-label="Tired" onclick="changeMood('🥱', this)">🥱</button>
                             
                             <!-- Romantic & Love -->
-                            <button class="emotion-btn extra-mood" data-label="Kissing you" onclick="changeMood('😘')">😘</button>
-                            <button class="emotion-btn extra-mood" data-label="Flirting" onclick="changeMood('😏')">😏</button>
-                            <button class="emotion-btn extra-mood" data-label="Blushing for you" onclick="changeMood('🙈')">🙈</button>
+                            <button class="emotion-btn extra-mood" data-label="Kissing you" onclick="changeMood('😘', this)">😘</button>
+                            <button class="emotion-btn extra-mood" data-label="Flirting" onclick="changeMood('😏', this)">😏</button>
+                            <button class="emotion-btn extra-mood" data-label="Blushing for you" onclick="changeMood('🙈', this)">🙈</button>
 
                             <!-- Missing & Long Distance -->
-                            <button class="emotion-btn extra-mood" data-label="Waiting for you" onclick="changeMood('⏳')">⏳</button>
+                            <button class="emotion-btn extra-mood" data-label="Waiting for you" onclick="changeMood('⏳', this)">⏳</button>
 
                             <!-- Cute & Playful -->
-                            <button class="emotion-btn extra-mood" data-label="Teasing you" onclick="changeMood('😝')">😝</button>
+                            <button class="emotion-btn extra-mood" data-label="Teasing you" onclick="changeMood('😝', this)">😝</button>
 
 
                             <!-- Health & Energy -->
-                            <button class="emotion-btn extra-mood" data-label="Not feeling well" onclick="changeMood('🤒')">🤒</button>
-                            <button class="emotion-btn extra-mood" data-label="Headache" onclick="changeMood('🤕')">🤕</button>
+                            <button class="emotion-btn extra-mood" data-label="Not feeling well" onclick="changeMood('🤒', this )">🤒</button>
+                            <button class="emotion-btn extra-mood" data-label="Headache" onclick="changeMood('🤕', this)">🤕</button>
 
                             <!-- Emotional Depth -->
-                            <button class="emotion-btn extra-mood" data-label="Overthinking" onclick="changeMood('💭')">💭</button>
-                            <button class="emotion-btn extra-mood" data-label="Crying a little" onclick="changeMood('😭')">😭</button>
+                            <button class="emotion-btn extra-mood" data-label="Overthinking" onclick="changeMood('💭', this)">💭</button>
+                            <button class="emotion-btn extra-mood" data-label="Crying a little" onclick="changeMood('😭', this)">😭</button>
 
                             <!-- Relationship Moments -->
-                            <button class="emotion-btn extra-mood" data-label="Missing your hug" onclick="changeMood('🫂')">🫂</button>
-                            <button class="emotion-btn extra-mood" data-label="Wants you to call" onclick="changeMood('📞')">📞</button>
-                            <button class="emotion-btn extra-mood" data-label="Thinking about our memories" onclick="changeMood('📸')">📸</button>
+                            <button class="emotion-btn extra-mood" data-label="Missing your hug" onclick="changeMood('🫂', this)">🫂</button>
+                            <button class="emotion-btn extra-mood" data-label="Wants you to call" onclick="changeMood('📞', this)">📞</button>
+                            <button class="emotion-btn extra-mood" data-label="Thinking about our memories" onclick="changeMood('📸', this)">📸</button>
 
                             <!-- Fun / Random -->
-                            <button class="emotion-btn extra-mood" data-label="Gaming" onclick="changeMood('🎮')">🎮</button>
-                            <button class="emotion-btn extra-mood" data-label="Listening music" onclick="changeMood('🎧')">🎧</button>
+                            <button class="emotion-btn extra-mood" data-label="Gaming" onclick="changeMood('🎮', this)">🎮</button>
+                            <button class="emotion-btn extra-mood" data-label="Listening music" onclick="changeMood('🎧', this)">🎧</button>
 
                         </div>
 
@@ -1099,9 +1364,61 @@
                         <button class="thinking-btn" onclick="sendThinkingAlert()">Send Love 💌</button>
                         <div id="thinkingLast" style="margin-top:10px;font-size:0.85rem;opacity:0.8;"></div>
                     </div>
+                    <!-- Separate History Button Card -->
+                    <div class="card" style="text-align: center; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));">
+                        <div class="card-title" style="justify-content: center;">📜 Our History</div>
+                        <p style="opacity: 0.7; margin-bottom: 15px; font-size: 0.9rem;">See all your love moments together</p>
+                        <button class="thinking-btn" onclick="showHistoryPage()" style="background: linear-gradient(135deg, #a855f7, #ec4899); border: none;">
+                            View Timeline ✨
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Enhanced History Screen -->
+        <div class="screen" id="historyScreen" style="flex-direction:column;">
+            <div class="glass dashboard-header">
+                <div class="header-left">
+                    <h2>📜 Our Love Story Timeline</h2>
+                    <div style="font-size:0.8rem;opacity:0.6;margin-top:4px;">Every moment matters 💕</div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" onclick="goBackToDashboard()" title="Back">⬅️</button>
+                </div>
+            </div>
+            
+            <!-- Stats Summary -->
+            <div class="history-stats" id="historyStats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalActivities">0</div>
+                    <div class="stat-label">Total Moments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="moodActivities">0</div>
+                    <div class="stat-label">😊 Moods</div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div style="padding: 0 20px 15px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+                <button class="filter-btn active" onclick="filterActivities('all', this)">
+                    📋 All Moments
+                </button>
+                <button class="filter-btn" onclick="filterActivities('mood', this)">
+                    😊 Moods
+                </button>
+                <button class="filter-btn" onclick="filterActivities('thinking', this)">
+                    💌 Thinking
+                </button>
+            </div>
+            
+            <!-- Activity List -->
+            <div class="dashboard-content" style="flex:1; overflow-y:auto; padding-top:5px;">
+                <div id="activityList" style="max-width:800px; margin:0 auto; width:100%;"></div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Thinking Alert Modal -->
@@ -1211,37 +1528,72 @@
             await setDoc(coupleRef, data, { merge: true });
         }
 
-        function listenForChanges() {
-            onSnapshot(coupleRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    appData = snapshot.data();
+function listenForChanges() {
+    onSnapshot(coupleRef, (snapshot) => {
+        if (snapshot.exists()) {
+            appData = snapshot.data();
 
-                    // Ensure togetherSince always exists
-                    if (!appData.togetherSince) {
-                        appData.togetherSince = "2024-01-24T00:00:00";
-                        saveToFirebase(appData);
-                    }
+            // Load activity log - prevent duplicates
+            if (!appData.activityLog) {
+                appData.activityLog = [];
+            }
 
-                    if (!activeProfile) {
-                        attemptRoleRestore();
-                    }
+            // 🔧 FIX: First filter out love activities from Firebase data
+            appData.activityLog = appData.activityLog.filter(activity => activity.type !== 'love');
 
-                    refreshDisplay();
-                    checkForAlert();
-                    startTogetherCounter();
+            // Merge without duplicates using Map for efficiency
+            const existingIds = new Map();
+            activityLog.forEach(a => {
+                if (a && a.id) existingIds.set(a.id, true);
+            });
 
-
-
-                    // Hide loader
-                    document.getElementById('appLoader').classList.add('hidden');
-
-                    // Show main app
-                    document.querySelector('.main-wrapper').classList.add('ready');
-                    console.log("Snapshot triggered");
-
+            appData.activityLog.forEach(remoteActivity => {
+                if (remoteActivity && remoteActivity.id && !existingIds.has(remoteActivity.id)) {
+                    activityLog.push(remoteActivity);
+                    existingIds.set(remoteActivity.id, true);
                 }
             });
+
+            // 🔧 FIX: Filter local activityLog to remove love activities
+            activityLog = activityLog.filter(activity => activity.type !== 'love');
+
+            // Sort by timestamp descending
+            activityLog.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            // Keep only last 200
+            if (activityLog.length > 200) {
+                activityLog = activityLog.slice(0, 200);
+            }
+
+            // 🔧 FIX: Save cleaned data back to Firebase (one-time cleanup)
+            if (appData.activityLog && appData.activityLog.some(a => a.type === 'love')) {
+                appData.activityLog = appData.activityLog.filter(activity => activity.type !== 'love');
+                saveToFirebase(appData);
+            }
+
+            // Ensure togetherSince always exists
+            if (!appData.togetherSince) {
+                appData.togetherSince = "2024-01-24T00:00:00";
+                saveToFirebase(appData);
+            }
+
+            if (!activeProfile) {
+                attemptRoleRestore();
+            }
+
+            refreshDisplay();
+            checkForAlert();
+            startTogetherCounter();
+
+            // Hide loader
+            document.getElementById('appLoader').classList.add('hidden');
+
+            // Show main app
+            document.querySelector('.main-wrapper').classList.add('ready');
+            console.log("Snapshot triggered");
         }
+    });
+}
 
         // Attempt to restore role from localStorage if it belongs to this user
         function attemptRoleRestore() {
@@ -1292,6 +1644,265 @@
             }
         }
 
+// ===== FIXED ACTIVITY HISTORY SYSTEM =====
+let activityLog = [];
+let isLoggingActivity = false;
+const actionTimestamps = {};
+
+function canPerformAction(actionType, cooldownMs = 1000) {
+    const now = Date.now();
+    const lastAction = actionTimestamps[actionType] || 0;
+    
+    if (now - lastAction < cooldownMs) {
+        return false;
+    }
+    
+    actionTimestamps[actionType] = now;
+    return true;
+}
+
+function logActivity(type, details, emoji) {
+    // Prevent recursive calls
+    if (isLoggingActivity) return;
+    isLoggingActivity = true;
+    
+    const activity = {
+        id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        type: type,
+        details: details,
+        emoji: emoji,
+        timestamp: Date.now(),
+        user: activeProfile === 'him' ? 'Shankar' : 'Aditi'
+    };
+    
+    // Check if this exact activity already exists locally (check both ID and content)
+    const existsLocally = activityLog.some(a => 
+        a.id === activity.id || 
+        (a.type === activity.type && 
+         a.details === activity.details && 
+         Math.abs(a.timestamp - activity.timestamp) < 1000)
+    );
+    
+    if (!existsLocally) {
+        activityLog.unshift(activity);
+        if (activityLog.length > 200) {
+            activityLog = activityLog.slice(0, 200);
+        }
+    }
+    
+    // Update appData
+    if (!appData.activityLog) {
+        appData.activityLog = [];
+    }
+    
+    // Check if activity already exists in appData
+    const existsInAppData = appData.activityLog.some(a => 
+        a.id === activity.id ||
+        (a.type === activity.type && 
+         a.details === activity.details && 
+         Math.abs(a.timestamp - activity.timestamp) < 1000)
+    );
+    
+    if (!existsInAppData) {
+        appData.activityLog.unshift(activity);
+        if (appData.activityLog.length > 200) {
+            appData.activityLog = appData.activityLog.slice(0, 200);
+        }
+        saveToFirebase(appData);
+    }
+    
+    // Reset flag after a short delay
+    setTimeout(() => {
+        isLoggingActivity = false;
+    }, 500);
+}
+
+function formatActivityTime(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMin = Math.floor(diffMs / 60000);
+    
+    if (diffMin < 1) return 'Just now';
+    if (diffMin < 60) return `${diffMin} min ago`;
+    
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours < 24) return `${diffHours} hr ago`;
+    
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function formatExactTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+}
+
+function getDateGroup(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today - 86400000);
+    const activityDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    
+    if (activityDate.getTime() === today.getTime()) return '🌟 Today';
+    if (activityDate.getTime() === yesterday.getTime()) return '📅 Yesterday';
+    
+    const diffDays = Math.floor((today - activityDate) / 86400000);
+    if (diffDays < 7) return `📆 ${diffDays} days ago`;
+    
+    return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    });
+}
+
+function showHistoryPage() {
+    showScreen('historyScreen');
+    // Reset to All filter
+    const allBtn = document.querySelector('#historyScreen .filter-btn');
+    if (allBtn) {
+        filterActivities('all', allBtn);
+    } else {
+        renderActivities('all');
+    }
+}
+
+function goBackToDashboard() {
+    showScreen('dashboardScreen');
+}
+
+function updateHistoryStats(activities) {
+    const total = activities.length;
+    const moods = activities.filter(a => a.type === 'mood').length;
+    
+    animateStatNumber('totalActivities', total);
+    animateStatNumber('moodActivities', moods);
+}
+
+function animateStatNumber(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = value;
+    el.style.transform = 'scale(1.2)';
+    el.style.transition = 'transform 0.2s ease';
+    setTimeout(() => {
+        el.style.transform = 'scale(1)';
+    }, 200);
+}
+
+function renderActivities(filter = 'all') {
+    const container = document.getElementById('activityList');
+    // Use local activityLog instead of appData to avoid reference issues
+    let activities = [...activityLog];
+    
+    // Remove duplicates based on ID
+    const seen = new Set();
+    activities = activities.filter(activity => {
+        if (!activity || !activity.id) return false;
+        const duplicate = seen.has(activity.id);
+        seen.add(activity.id);
+        return !duplicate;
+    });
+    
+    // Sort by timestamp descending
+    activities.sort((a, b) => b.timestamp - a.timestamp);
+    
+    if (filter !== 'all') {
+        activities = activities.filter(a => a.type === filter);
+    }
+
+    // 🔧 ADD THIS: Only show last 4 days of activities
+    const fourDaysAgo = Date.now() - (4 * 24 * 60 * 60 * 1000);
+    activities = activities.filter(activity => activity.timestamp > fourDaysAgo);
+
+    updateHistoryStats(activities);
+    
+    if (activities.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div style="font-size:3rem;margin-bottom:15px;">✨</div>
+                <div style="font-weight:600;margin-bottom:8px;">No moments yet</div>
+                <div style="font-size:0.9rem;">Start creating beautiful memories together! 💕</div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Group by date
+    const grouped = {};
+    activities.forEach(activity => {
+        const dateGroup = getDateGroup(activity.timestamp);
+        if (!grouped[dateGroup]) {
+            grouped[dateGroup] = [];
+        }
+        grouped[dateGroup].push(activity);
+    });
+    
+    let html = '';
+    
+    Object.keys(grouped).forEach(dateGroup => {
+        html += `
+            <div class="activity-date-group">
+                <div class="date-header">
+                    <div class="date-header-line"></div>
+                    <div class="date-header-text">${dateGroup}</div>
+                    <div class="date-header-line"></div>
+                </div>
+        `;
+        
+        grouped[dateGroup].forEach((activity, index) => {
+            const userBadge = activity.user === 'Shankar' 
+                ? '<span class="activity-user-badge badge-shankar">💙 Shankar</span>'
+                : '<span class="activity-user-badge badge-aditi">💖 Aditi</span>';
+            
+            html += `
+                <div class="activity-item type-${activity.type}" style="animation-delay:${index * 0.05}s">
+                    <div class="activity-icon-wrapper">
+                        <span class="activity-icon-small">${activity.emoji}</span>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-detail-row">
+                            <span class="activity-text">${activity.details}</span>
+                            ${userBadge}
+                        </div>
+                        <div class="activity-time">
+                            ${formatActivityTime(activity.timestamp)}
+                            <span class="activity-exact-time"> • ${formatExactTime(activity.timestamp)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function filterActivities(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderActivities(type);
+}
 
         // Set active profile
         async function setProfile(role) {
@@ -1370,29 +1981,37 @@
 
 
         // Change mood
-        function changeMood(emoji) {
+        function changeMood(emoji, el) {
             if (!activeProfile) {
                 showToast("Select your profile first 💕");
                 return;
             }
-
+            if (!canPerformAction('mood', 500)) return; // 500ms cooldown
             const now = Date.now();
+
+            // 🔧 Get previous mood before updating
+            const previousMood = activeProfile === 'him' ? appData.himMood : appData.herMood;
 
             if (activeProfile === 'him') {
                 appData.himMood = emoji;
-                appData.himMoodTime = now;   // ✅ ADD
+                appData.himMoodTime = now;
             } else {
                 appData.herMood = emoji;
-                appData.herMoodTime = now;   // ✅ ADD
+                appData.herMoodTime = now;
             }
 
             document.querySelectorAll('.emotion-btn').forEach(btn=>{
                 btn.classList.remove('selected');
             });
 
-            event.target.classList.add('selected');
+            el.classList.add('selected');
 
             saveToFirebase(appData);
+
+            // Log activity with previous mood
+            const userName = activeProfile === 'him' ? 'Shankar' : 'Aditi';
+            logActivity('mood', `${userName} changed mood from ${previousMood} to ${emoji}`, emoji);
+
             showToast('Mood shared! 💌');
             burstHearts();
             refreshDisplay();
@@ -1424,7 +2043,6 @@
 
             appData.loveCount++;
 
-            // 👇 Increase personal tap count
             if (!appData.loveTaps) {
                 appData.loveTaps = { him: 0, her: 0 };
             }
@@ -1438,7 +2056,6 @@
         }
 
 
-
         // Send thinking alert
         function sendThinkingAlert() {
             if (!activeProfile) {
@@ -1446,11 +2063,21 @@
                 return;
             }
 
+            if (!canPerformAction('thinking', 2000)) {
+                showToast("Please wait before sending again 💕");
+                return;
+            }
+
             appData.thinkingAlert = activeProfile;
             appData.lastSender = activeProfile;   // ⭐ store sender
             appData.thinkingAlertTime = Date.now();
-            saveToFirebase(appData);
 
+            // Log activity
+            const userName = activeProfile === 'him' ? 'Shankar' : 'Aditi';
+            const partnerName = activeProfile === 'him' ? 'Aditi' : 'Shankar';
+            logActivity('thinking', `${userName} sent Thinking of You to ${partnerName} 💌`, '💭');
+
+            saveToFirebase(appData);
             showToast('Alert sent! 💭');
         }
 
