@@ -401,8 +401,8 @@
         }
 
        
-        /* Hide extra buttons completely */
-        .emotions-grid:not(.expanded) .emotion-btn:nth-child(n+5) {
+        /* Keep only first 4 visible in main grid */
+        #moodGrid:not(.expanded) .emotion-btn:nth-child(n+5) {
             display: none;
         }
 
@@ -450,7 +450,6 @@
 
         .emotion-btn {
             aspect-ratio: 1;
-            border: none;
             border-radius: 16px;
             font-size: clamp(1.5rem, 8vw, 2.5rem);
             cursor: pointer;
@@ -772,6 +771,11 @@
         .loader-heart {
             font-size: 4rem;
             animation: pulseHeart 1.5s ease-in-out infinite, floatLoader 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         @keyframes floatLoader {
@@ -1194,6 +1198,432 @@ body.dark-mode .badge-aditi {
     }
 }
 
+/* Enhanced Mood Modal Styles */
+#moodModal .modal-content {
+    max-width: 650px;
+    max-height: 85vh;
+    background: linear-gradient(135deg, #ffffff 0%, #fce7f3 30%, #f3e8ff 60%, #e0e7ff 100%);
+    border-radius: 32px;
+    padding: 35px 30px;
+    box-shadow: 0 40px 80px rgba(236, 72, 153, 0.25), 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(236, 72, 153, 0.2);
+    position: relative;
+    overflow: visible;
+}
+
+body.dark-mode #moodModal .modal-content {
+    background: linear-gradient(135deg, #1e1b4b 0%, #2d1b4e 30%, #1e1b4b 60%, #0f172a 100%);
+    border: 2px solid rgba(168, 85, 247, 0.4);
+    box-shadow: 0 40px 80px rgba(168, 85, 247, 0.3), 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Header Decoration */
+#moodModal .modal-content::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 20%;
+    right: 20%;
+    height: 4px;
+    background: linear-gradient(90deg, #ec4899, #a855f7, #ec4899);
+    border-radius: 0 0 20px 20px;
+    opacity: 0.8;
+}
+
+body.dark-mode #moodModal .modal-content::before {
+    background: linear-gradient(90deg, #f472b6, #d8b4fe, #f472b6);
+    opacity: 1;
+}
+
+/* Modal Header */
+.mood-modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.mood-modal-icon {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    animation: moodIconFloat 3s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes moodIconFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-8px) scale(1.05); }
+    75% { transform: translateY(4px) scale(0.98); }
+}
+
+.mood-modal-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+body.dark-mode .mood-modal-title {
+    background: linear-gradient(135deg, #f472b6 0%, #d8b4fe 50%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mood-modal-subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+body.dark-mode .mood-modal-subtitle {
+    color: #d1d5db;
+}
+
+/* Category Section Headers */
+.mood-category {
+    margin-bottom: 20px;
+}
+
+.mood-category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+}
+
+.mood-category-icon {
+    font-size: 1.3rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(236, 72, 153, 0.1);
+    border-radius: 10px;
+}
+
+body.dark-mode .mood-category-icon {
+    background: rgba(168, 85, 247, 0.2);
+}
+
+.mood-category-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ec4899;
+    opacity: 0.8;
+}
+
+body.dark-mode .mood-category-label {
+    color: #d8b4fe;
+}
+
+.mood-category-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(236, 72, 153, 0.2), transparent);
+    border-radius: 2px;
+}
+
+body.dark-mode .mood-category-line {
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.3), transparent);
+}
+
+/* Enhanced Grid for Modal */
+#moodModalGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+}
+
+/* Mood Button Wrapper */
+.mood-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+}
+
+#moodModalGrid .emotion-btn {
+    aspect-ratio: 1;
+    width: 100%;
+    min-height: 65px;
+    font-size: 1.9rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(236, 72, 153, 0.1);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-mode #moodModalGrid .emotion-btn {
+    background: rgba(30, 27, 75, 0.7);
+    border: 2px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#moodModalGrid .emotion-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 16px;
+}
+
+#moodModalGrid .emotion-btn:hover {
+    transform: scale(1.08);
+    border-color: #ec4899;
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode #moodModalGrid .emotion-btn:hover {
+    border-color: #d8b4fe;
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+    background: rgba(30, 27, 75, 0.9);
+}
+
+#moodModalGrid .emotion-btn:hover::before {
+    opacity: 1;
+}
+
+#moodModalGrid .emotion-btn:active {
+    transform: scale(0.95);
+}
+
+#moodModalGrid .emotion-btn.selected {
+    outline: 3px solid #ec4899;
+    outline-offset: 2px;
+    background: rgba(236, 72, 153, 0.1);
+    border-color: #ec4899;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+body.dark-mode #moodModalGrid .emotion-btn.selected {
+    outline-color: #d8b4fe;
+    background: rgba(168, 85, 247, 0.2);
+    border-color: #d8b4fe;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+/* Mood Label Below Button - Fixed Alignment */
+.mood-btn-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #666;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 100%;
+    word-wrap: break-word;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+}
+
+body.dark-mode .mood-btn-label {
+    color: #d1d5db;
+}
+
+/* Quick Mood Chips */
+.mood-quick-chips {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.mood-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(236, 72, 153, 0.2);
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    color: #666;
+}
+
+body.dark-mode .mood-chip {
+    background: rgba(30, 27, 75, 0.5);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #d1d5db;
+}
+
+.mood-chip:hover {
+    background: rgba(236, 72, 153, 0.15);
+    border-color: #ec4899;
+    color: #ec4899;
+    transform: translateY(-2px);
+}
+
+body.dark-mode .mood-chip:hover {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: #d8b4fe;
+    color: #d8b4fe;
+}
+
+.mood-chip.active {
+    background: linear-gradient(135deg, #ec4899, #a855f7) !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    transform: translateY(-2px);
+}
+
+body.dark-mode .mood-chip.active {
+    background: linear-gradient(135deg, #ec4899, #a855f7) !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.5);
+}
+
+/* Close Button Enhancement */
+.mood-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    color: #666;
+}
+
+body.dark-mode .mood-modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+}
+
+.mood-modal-close:hover {
+    background: rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+    transform: rotate(90deg);
+}
+
+body.dark-mode .mood-modal-close:hover {
+    background: rgba(168, 85, 247, 0.3);
+    color: #d8b4fe;
+}
+
+/* Selected Mood Preview */
+.selected-mood-preview {
+    text-align: center;
+    padding: 12px;
+    background: rgba(236, 72, 153, 0.05);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px dashed rgba(236, 72, 153, 0.2);
+    display: none;
+}
+
+body.dark-mode .selected-mood-preview {
+    background: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.selected-mood-preview.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.selected-mood-preview-text {
+    font-size: 0.85rem;
+    color: #ec4899;
+    font-weight: 600;
+}
+
+body.dark-mode .selected-mood-preview-text {
+    color: #d8b4fe;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    #moodModal .modal-content {
+        max-width: 95vw;
+        max-height: 90vh;
+        padding: 25px 18px;
+        border-radius: 28px;
+    }
+    
+    #moodModalGrid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+    
+    #moodModalGrid .emotion-btn {
+        min-height: 55px;
+        font-size: 1.5rem;
+        border-radius: 14px;
+    }
+    
+    .mood-modal-title {
+        font-size: 1.4rem;
+    }
+    
+    .mood-modal-icon {
+        font-size: 2.5rem;
+    }
+    
+}
+/* Smooth close animation */
+#moodModal.closing .modal-content {
+    animation: modal-pop-out 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modal-pop-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+}
+
+/* Fade out overlay */
+#moodModal.closing {
+    animation: overlay-fade-out 0.3s ease forwards;
+}
+
+@keyframes overlay-fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
     </style>
 </head>
 <body>
@@ -1287,6 +1717,9 @@ body.dark-mode .badge-aditi {
                             <button class="emotion-btn extra-mood" data-label="Kissing you" onclick="changeMood('😘', this)">😘</button>
                             <button class="emotion-btn extra-mood" data-label="Flirting" onclick="changeMood('😏', this)">😏</button>
                             <button class="emotion-btn extra-mood" data-label="Blushing for you" onclick="changeMood('🙈', this)">🙈</button>
+                            <button class="emotion-btn extra-mood" data-label="Horny" onclick="changeMood('🌚', this)">🌚</button>
+                            <button class="emotion-btn extra-mood" data-label="Wants to bite" onclick="changeMood('🫦', this)">🫦</button>
+                            <button class="emotion-btn extra-mood" data-label="Shy" onclick="changeMood('👉👈', this)">👉👈</button>
 
                             <!-- Missing & Long Distance -->
                             <button class="emotion-btn extra-mood" data-label="Waiting for you" onclick="changeMood('⏳', this)">⏳</button>
@@ -1309,7 +1742,9 @@ body.dark-mode .badge-aditi {
                             <button class="emotion-btn extra-mood" data-label="Thinking about our memories" onclick="changeMood('📸', this)">📸</button>
 
                             <!-- Fun / Random -->
+                             <button class="emotion-btn extra-mood" data-label="Coding" onclick="changeMood('💻', this)">💻</button>
                             <button class="emotion-btn extra-mood" data-label="Gaming" onclick="changeMood('🎮', this)">🎮</button>
+                            <button class="emotion-btn extra-mood" data-label="Watching a movie" onclick="changeMood('🍿', this)">🍿</button>
                             <button class="emotion-btn extra-mood" data-label="Listening music" onclick="changeMood('🎧', this)">🎧</button>
 
                         </div>
@@ -1430,6 +1865,49 @@ body.dark-mode .badge-aditi {
             <button class="modal-btn" onclick="closeThinkingModal()">Aww, Same 💗</button>
         </div>
     </div>
+
+<!-- Enhanced Mood Selection Modal -->
+<div class="modal" id="moodModal">
+    <div class="modal-content" style="max-width: 650px; max-height: 85vh; overflow-y: auto; padding: 0; position: relative;">
+        <!-- Close Button -->
+        <button class="mood-modal-close" onclick="closeMoodModal()">✕</button>
+        
+        <!-- Modal Header -->
+        <div class="mood-modal-header" style="padding: 35px 30px 20px;">
+            <div class="mood-modal-icon">💌</div>
+            <div class="mood-modal-title">How Are You Feeling?</div>
+            <div class="mood-modal-subtitle">Share your mood with your special one ✨</div>
+        </div>
+        
+        <div style="padding: 0 30px 30px;">
+            
+            <!-- Quick Filter Chips -->
+            <div class="mood-quick-chips" id="moodQuickChips">
+                <span class="mood-chip active" onclick="filterByCategory('all', this)">🌟 All</span>
+                <span class="mood-chip" onclick="filterByCategory('happy', this)">😊 Happy</span>
+                <span class="mood-chip" onclick="filterByCategory('love', this)">💖 Love</span>
+                <span class="mood-chip" onclick="filterByCategory('sad', this)">😢 Sad</span>
+                <span class="mood-chip" onclick="filterByCategory('playful', this)">😜 Playful</span>
+                <span class="mood-chip" onclick="filterByCategory('health', this)">🤒 Health</span>
+                <span class="mood-chip" onclick="filterByCategory('romantic', this)">💕 Romantic</span>
+                <span class="mood-chip" onclick="filterByCategory('spicy', this)">🌚 Spicy</span>
+                <span class="mood-chip" onclick="filterByCategory('coding', this)">💻 Chilling</span>
+            </div>
+            
+            <!-- Selected Mood Preview -->
+            <div class="selected-mood-preview" id="selectedMoodPreview">
+                <span class="selected-mood-preview-text">
+                    Currently: <span id="currentMoodEmoji">😊</span> - <span id="currentMoodLabel">Happy</span>
+                </span>
+            </div>
+            
+            <!-- Mood Grid -->
+            <div class="emotions-grid" id="moodModalGrid">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Switch Profile Confirmation Modal -->
     <div class="modal" id="switchConfirmModal">
@@ -1989,7 +2467,7 @@ function filterActivities(type, btn) {
             if (!canPerformAction('mood', 500)) return; // 500ms cooldown
             const now = Date.now();
 
-            // 🔧 Get previous mood before updating
+            // Get previous mood before updating
             const previousMood = activeProfile === 'him' ? appData.himMood : appData.herMood;
 
             if (activeProfile === 'him') {
@@ -2000,11 +2478,17 @@ function filterActivities(type, btn) {
                 appData.herMoodTime = now;
             }
 
-            document.querySelectorAll('.emotion-btn').forEach(btn=>{
+            // Remove selected class from ALL emotion buttons (both in main grid and modal)
+            document.querySelectorAll('.emotion-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
 
-            el.classList.add('selected');
+            // Highlight the matching buttons in BOTH grids
+            document.querySelectorAll('.emotion-btn').forEach(btn => {
+                if (btn.textContent === emoji) {
+                    btn.classList.add('selected');
+                }
+            });
 
             saveToFirebase(appData);
 
@@ -2258,6 +2742,9 @@ function filterActivities(type, btn) {
                 '😘': `${partnerName} is sending you kisses right now 😘`,
                 '😏': `${partnerName} is flirting with you 😏`,
                 '🙈': `${partnerName} is blushing thinking about you 🙈`,
+                '🌚': `${partnerName} is feeling a bit naughty 🌚`,
+                '🫦': `${partnerName} wants to bite you 🫦`,
+                '👉👈': `${partnerName} is feeling shy 👉👈`,
 
                 // ⏳ Missing & Distance
                 '⏳': `${partnerName} is waiting for you patiently ⏳`,
@@ -2279,7 +2766,9 @@ function filterActivities(type, btn) {
                 '📸': `${partnerName} is thinking about your memories 📸`,
 
                 // 🎮 Fun / Activity
+                '💻': `${partnerName} is coding right now 💻`,
                 '🎮': `${partnerName} is gaming right now 🎮`,
+                '🍿': `${partnerName} is watching a movie 🍿`,
                 '🎧': `${partnerName} is lost in music 🎧`,
             };
 
@@ -2504,21 +2993,182 @@ function filterActivities(type, btn) {
             }, 150);
         }
 
-        // Toggle extra moods
+        // Toggle extra moods - NOW OPENS MODAL
         function toggleMoods() {
-            const grid = document.getElementById('moodGrid');
-            const btn = document.getElementById('toggleMoodBtn');
-
-            grid.classList.toggle('expanded');
-
-            if (grid.classList.contains('expanded')) {
-                btn.textContent = "Show less ✨";
-            } else {
-                btn.textContent = "Show more 💕";
-            }
+            showMoodModal();
         }
 
+// Categories for mood filtering
+const moodCategories = {
+    'happy': ['😊', '😍', '🥰', '😎', '😇', '😋'],
+    'love': ['😍', '🥰', '😘', '🙈', '🫂'],
+    'sad': ['😢', '😔', '🥺', '😭', '😕', '😑'],
+    'playful': ['😋', '😝', '😏', '🎮', '🎧'],
+    'health': ['😴', '🥱', '🤒', '🤕'],
+    'romantic': ['😘', '😏', '🙈', '🫂', '📞', '📸', '💭', '⏳'],
+    'spicy': ['🌚', '🫦'],
+    'coding': ['💻', '🍿', '👉👈']
+};
 
+// Show mood popup modal with enhanced design
+function showMoodModal() {
+    const modal = document.getElementById('moodModal');
+    const grid = document.getElementById('moodModalGrid');
+    
+    // Reset chips to 'All'
+    document.querySelectorAll('.mood-chip').forEach(chip => chip.classList.remove('active'));
+    const allChip = document.querySelector('.mood-chip');
+    if (allChip) allChip.classList.add('active');
+    
+    // Get ALL emotion buttons from original grid
+    const allEmotions = document.querySelectorAll('#moodGrid .emotion-btn');
+    
+    // Clear and populate modal grid
+    grid.innerHTML = '';
+    allEmotions.forEach(btn => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'mood-btn-wrapper';
+        
+        const newBtn = document.createElement('button');
+        newBtn.className = 'emotion-btn';
+        newBtn.textContent = btn.textContent;
+        newBtn.setAttribute('data-label', btn.getAttribute('data-label') || '');
+        newBtn.setAttribute('data-emoji', btn.textContent);
+        
+        // Add mood categories for filtering
+        const emoji = btn.textContent;
+        let categories = [];
+        Object.keys(moodCategories).forEach(cat => {
+            if (moodCategories[cat].includes(emoji)) {
+                categories.push(cat);
+            }
+        });
+        newBtn.setAttribute('data-categories', categories.join(','));
+        
+        // Create closure to capture the emoji
+        newBtn.onclick = function() {
+            const originalBtn = document.querySelector(`#moodGrid .emotion-btn[data-label="${btn.getAttribute('data-label')}"]`);
+            changeMood(emoji, originalBtn || btn);
+            closeMoodModal();
+        };
+        
+        // Highlight currently selected mood
+        if (btn.classList.contains('selected')) {
+            newBtn.classList.add('selected');
+        }
+        
+        // Add label below button
+        const label = document.createElement('span');
+        label.className = 'mood-btn-label';
+        label.textContent = btn.getAttribute('data-label') || '';
+        
+        wrapper.appendChild(newBtn);
+        wrapper.appendChild(label);
+        grid.appendChild(wrapper);
+    });
+    
+    // Update selected mood preview
+    updateMoodPreview();
+    
+    // Show modal with smooth animation
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Update the selected mood preview
+function updateMoodPreview() {
+    const preview = document.getElementById('selectedMoodPreview');
+    const emojiEl = document.getElementById('currentMoodEmoji');
+    const labelEl = document.getElementById('currentMoodLabel');
+    
+    if (!activeProfile || !preview || !emojiEl || !labelEl) return;
+    
+    const myMood = activeProfile === 'him' ? appData.himMood : appData.herMood;
+    if (!myMood || myMood === '😊') {
+        preview.classList.remove('show');
+        return;
+    }
+    
+    // Find the label for the current mood
+    const moodBtn = document.querySelector(`#moodGrid .emotion-btn[data-label]`);
+    const allBtns = document.querySelectorAll('#moodGrid .emotion-btn');
+    let label = 'Mood';
+    allBtns.forEach(btn => {
+        if (btn.textContent === myMood) {
+            label = btn.getAttribute('data-label') || 'Mood';
+        }
+    });
+    
+    emojiEl.textContent = myMood;
+    labelEl.textContent = label;
+    preview.classList.add('show');
+}
+
+
+// Filter mood buttons by category
+function filterByCategory(category, chipElement) {
+    // Update active chip
+    document.querySelectorAll('.mood-chip').forEach(chip => {
+        chip.classList.remove('active');
+    });
+    
+    if (chipElement) {
+        chipElement.classList.add('active');
+    }
+    
+    const buttons = document.querySelectorAll('#moodModalGrid .emotion-btn');
+    
+    buttons.forEach(btn => {
+        const parentWrapper = btn.parentElement;
+        
+        if (category === 'all') {
+            parentWrapper.style.display = '';
+            return;
+        }
+        
+        const categories = (btn.getAttribute('data-categories') || '').split(',');
+        
+        if (categories.includes(category)) {
+            parentWrapper.style.display = '';
+            btn.style.animation = 'moodFadeIn 0.3s ease forwards';
+        } else {
+            parentWrapper.style.display = 'none';
+        }
+    });
+}
+
+// Close mood modal with smooth animation
+function closeMoodModal() {
+    const modal = document.getElementById('moodModal');
+    
+    // Add closing class for animation
+    modal.classList.add('closing');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.classList.remove('active');
+        modal.classList.remove('closing');
+        document.body.style.overflow = '';
+    }, 300); // Match animation duration
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('moodModal');
+    if (e.target === modal && modal.classList.contains('active') && !modal.classList.contains('closing')) {
+        closeMoodModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('moodModal');
+        if (modal.classList.contains('active') && !modal.classList.contains('closing')) {
+            closeMoodModal();
+        }
+    }
+});
 
         setTimeout(() => {
             const loader = document.getElementById('appLoader');
