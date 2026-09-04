@@ -1742,7 +1742,8 @@ body.dark-mode .selected-mood-preview-text {
                             <button class="emotion-btn extra-mood" data-label="Thinking about our memories" onclick="changeMood('📸', this)">📸</button>
 
                             <!-- Fun / Random -->
-                             <button class="emotion-btn extra-mood" data-label="Coding" onclick="changeMood('💻', this)">💻</button>
+                            <button class="emotion-btn extra-mood" data-label="Coding" onclick="changeMood('💻', this)">💻</button>
+                            <button class="emotion-btn extra-mood" data-label="Studying" onclick="changeMood('🖊️', this)">🖊️</button>
                             <button class="emotion-btn extra-mood" data-label="Gaming" onclick="changeMood('🎮', this)">🎮</button>
                             <button class="emotion-btn extra-mood" data-label="Watching a movie" onclick="changeMood('🍿', this)">🍿</button>
                             <button class="emotion-btn extra-mood" data-label="Listening music" onclick="changeMood('🎧', this)">🎧</button>
@@ -2767,6 +2768,7 @@ function filterActivities(type, btn) {
 
                 // 🎮 Fun / Activity
                 '💻': `${partnerName} is coding right now 💻`,
+                '🖊️': `${partnerName} is studying right now 🖊️`,
                 '🎮': `${partnerName} is gaming right now 🎮`,
                 '🍿': `${partnerName} is watching a movie 🍿`,
                 '🎧': `${partnerName} is lost in music 🎧`,
@@ -3007,7 +3009,7 @@ const moodCategories = {
     'health': ['😴', '🥱', '🤒', '🤕'],
     'romantic': ['😘', '😏', '🙈', '🫂', '📞', '📸', '💭', '⏳'],
     'spicy': ['🌚', '🫦'],
-    'coding': ['💻', '🍿', '👉👈']
+    'coding': ['💻', '🖊️', '🍿', '👉👈']
 };
 
 // Show mood popup modal with enhanced design
